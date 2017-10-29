@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Camper from './camper';
 import { connect } from 'react-redux';
-import { getCampers30Days } from '../actions';
+import { getCampers30Days, getCampersAllTime } from '../actions';
 
 class CamperList extends Component {
   componentDidMount() {
@@ -10,10 +10,14 @@ class CamperList extends Component {
 
   renderCampers(camper, index) {
     console.log(camper)
+    const camperURL = `https://freecodecamp.com/${camper.username}`
     return (
       <tr key={camper.img}>
         <td>{index+1}</td>
-        <td>{camper.username}</td>
+        <td>
+          <img src={camper.img} className="camperAvatar" />
+          <a href={camperURL}>{camper.username}</a>
+        </td>
         <td>{camper.recent}</td>
         <td>{camper.alltime}</td>
       </tr>
@@ -29,7 +33,7 @@ class CamperList extends Component {
               <th>#</th>
               <th>Camper</th>
               <th>Points in the past 30 days</th>
-              <th>All time points</th>
+              <th onClick={this.props.getCampersAllTime}>All time points</th>
             </tr>
           </thead>
           <tbody>
@@ -42,10 +46,13 @@ class CamperList extends Component {
 }
 
 function mapStateToProps(state) {
-  return { campers30Days: state.campers30Days }
+  return {
+    campers30Days: state.campers30Days,
+    campersAllTime: stte.campersAllTime
+  }
 }
 
-export default connect(mapStateToProps, { getCampers30Days })(CamperList)
+export default connect(mapStateToProps, { getCampers30Days, getCampersAllTime })(CamperList)
 // <Camper data={ this.props.camperInfo }/>
 
 // {this.props.campers30Days.map((camper) => {
