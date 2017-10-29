@@ -8,22 +8,34 @@ class CamperList extends Component {
     this.props.getCampers30Days();
   }
 
-  renderCampers(camper) {
+  renderCampers(camper, index) {
     console.log(camper)
-    return <li>{camper.username}</li>;
-    const campers30Days = this.props.campers30Days;
+    return (
+      <tr key={camper.img}>
+        <td>{index+1}</td>
+        <td>{camper.username}</td>
+        <td>{camper.recent}</td>
+        <td>{camper.alltime}</td>
+      </tr>
+    )
   }
 
   render() {
-    // console.log(this.props.campers30Days)
-    if (!this.props.campers30Days) {
-      return <p>Loading...</p>;
-    }
     return (
       <div>
-        <ol>
-        {this.props.campers30Days.map((camper) => this.renderCampers(camper))}
-        </ol>
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Camper</th>
+              <th>Points in the past 30 days</th>
+              <th>All time points</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.campers30Days.map((camper, index) => this.renderCampers(camper, index))}
+          </tbody>
+        </table>
       </div>
     )
   };
@@ -35,9 +47,6 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, { getCampers30Days })(CamperList)
 // <Camper data={ this.props.camperInfo }/>
-// {this.renderCampers()}
-// {this.props.campers30Days.map(this.renderCampers)}
-// {this.props.campers30Days.map((camper) => this.renderCampers)}
 
 // {this.props.campers30Days.map((camper) => {
 //   return <li>{camper.username}</li>
