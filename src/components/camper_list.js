@@ -8,14 +8,10 @@ class CamperList extends Component {
     this.props.getCampers30Days();
   }
 
-  renderCampers() {
-    // console.log(this.props.campers30Days)
+  renderCampers(camper) {
+    console.log(camper)
+    return <li>{camper.username}</li>;
     const campers30Days = this.props.campers30Days;
-    console.log(campers30Days);
-    campers30Days.map((camper) => {
-      return <li>{camper.username}</li>
-
-    })
   }
 
   render() {
@@ -25,14 +21,9 @@ class CamperList extends Component {
     }
     return (
       <div>
-        <ul>
-        {this.props.campers30Days.map((camper) => {
-          return <li>{camper.username}</li>
-        })}
-        {this.renderCampers()}
-        afss
-
-        </ul>
+        <ol>
+        {this.props.campers30Days.map((camper) => this.renderCampers(camper))}
+        </ol>
       </div>
     )
   };
@@ -46,3 +37,9 @@ export default connect(mapStateToProps, { getCampers30Days })(CamperList)
 // <Camper data={ this.props.camperInfo }/>
 // {this.renderCampers()}
 // {this.props.campers30Days.map(this.renderCampers)}
+// {this.props.campers30Days.map((camper) => this.renderCampers)}
+
+// {this.props.campers30Days.map((camper) => {
+//   return <li>{camper.username}</li>
+// })}
+// {this.renderCampers()}
