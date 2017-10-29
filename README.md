@@ -1,25 +1,10 @@
-# ReduxSimpleStarter
+# Camper Leaderboard
 
-Interested in learning [Redux](https://www.udemy.com/react-redux/)?
+This is a small beginner project I made using React as a FreeCodeCamp requirement.
 
-### Getting Started
+### What does it do?
 
-There are two methods for getting started with this repo.
+It provides a list of the most active FreeCodeCamp users within the past 30 days and offers a view of the most active users of all time.
 
-#### Familiar with Git?
-Checkout this repo, install dependencies, then start the gulp process with the following:
-
-```
-> git clone https://github.com/StephenGrider/ReduxSimpleStarter.git
-> cd ReduxSimpleStarter
-> npm install
-> npm start
-```
-
-#### Not Familiar with Git?
-Click [here](https://github.com/StephenGrider/ReactStarter/releases) then download the .zip file.  Extract the contents of the zip file, then open your terminal, change to the project directory, and:
-
-```
-> npm install
-> npm start
-```
+#### What else do I have to know?
+This project was created with Stephen Grider's ReduxSimpleStarter as a base - see LICENSE.MD for details.
