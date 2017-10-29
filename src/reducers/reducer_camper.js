@@ -5,7 +5,7 @@ export default function(state=[], action) {
     case FETCH_CAMPERS_30_DAYS:
       return action.payload.data;
     case FETCH_CAMPERS_ALL_TIME:
-      // Insert here
+      return action.payload.data;
     default:
       return state;
   }

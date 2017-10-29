@@ -2,14 +2,29 @@ import React, { Component } from 'react';
 import Camper from './camper';
 import { connect } from 'react-redux';
 import { getCampers30Days, getCampersAllTime } from '../actions';
+import { bindActionCreators } from 'redux';
 
 class CamperList extends Component {
+  constructor(props) {
+    super(props)
+
+    this.switchToAllTime = this.switchToAllTime.bind(this);
+    this.switchTo30Days = this.switchTo30Days.bind(this);
+  }
   componentDidMount() {
     this.props.getCampers30Days();
   }
 
+  switchToAllTime() {
+    this.props.getCampersAllTime();
+  }
+
+  switchTo30Days() {
+    this.props.getCampers30Days();
+  }
+
   renderCampers(camper, index) {
-    console.log(camper)
+    // console.log(camper)
     const camperURL = `https://freecodecamp.com/${camper.username}`
     return (
       <tr key={camper.img}>
@@ -32,12 +47,12 @@ class CamperList extends Component {
             <tr>
               <th>#</th>
               <th>Camper</th>
-              <th>Points in the past 30 days</th>
-              <th onClick={this.props.getCampersAllTime}>All time points</th>
+              <th onClick={this.switchTo30Days}>Points in the past 30 days</th>
+              <th onClick={this.switchToAllTime}>All time points</th>
             </tr>
           </thead>
           <tbody>
-            {this.props.campers30Days.map((camper, index) => this.renderCampers(camper, index))}
+            {this.props.campers.map((camper, index) => this.renderCampers(camper, index))}
           </tbody>
         </table>
       </div>
@@ -47,15 +62,15 @@ class CamperList extends Component {
 
 function mapStateToProps(state) {
   return {
-    campers30Days: state.campers30Days,
-    campersAllTime: stte.campersAllTime
+    campers: state.campers
   }
 }
 
-export default connect(mapStateToProps, { getCampers30Days, getCampersAllTime })(CamperList)
-// <Camper data={ this.props.camperInfo }/>
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators( {
+    getCampers30Days: getCampers30Days,
+    getCampersAllTime: getCampersAllTime
+  }, dispatch);
+}
 
-// {this.props.campers30Days.map((camper) => {
-//   return <li>{camper.username}</li>
-// })}
-// {this.renderCampers()}
+export default connect(mapStateToProps, mapDispatchToProps)(CamperList)
