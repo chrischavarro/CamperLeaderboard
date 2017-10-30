@@ -1,49 +1,17 @@
 import React, { Component } from 'react';
-import Camper from './camper';
+import Camper from '../containers/camper';
 import { connect } from 'react-redux';
-import { getCampers30Days, getCampersAllTime, getCampers } from '../actions';
-import { bindActionCreators } from 'redux';
+import { getCampers } from '../actions';
 
 class CamperList extends Component {
-  constructor(props) {
-    super(props)
-
-    this.switchToAllTime = this.switchToAllTime.bind(this);
-    this.switchTo30Days = this.switchTo30Days.bind(this);
-  }
-
   componentDidMount() {
     this.props.getCampers('RECENT');
   }
 
-  // componentDidMount() {
-  //   this.props.getCampers30Days();
-  // }
-
-// switchToAllTime and switchTo30Days can probably be reduced to a single actions
-// like getCampers(recent) and getCampers(alltime), with the action accepting a link
-// with the passed value added to the end of the URL
-  switchToAllTime() {
-    this.props.getCampersAllTime();
-  }
-
-  switchTo30Days() {
-    this.props.getCampers30Days();
-  }
-
   renderCampers(camper, index) {
-    // console.log(camper)
     const camperURL = `https://freecodecamp.com/${camper.username}`
     return (
-      <tr key={camper.img}>
-        <td>{index+1}</td>
-        <td>
-          <img src={camper.img} className="camperAvatar" />
-          <a href={camperURL}>{camper.username}</a>
-        </td>
-        <td>{camper.recent}</td>
-        <td>{camper.alltime}</td>
-      </tr>
+        <Camper data={camper} index={index} key={index}/>
     )
   }
 
@@ -55,8 +23,8 @@ class CamperList extends Component {
             <tr>
               <th>#</th>
               <th>Camper</th>
-              <th onClick={this.switchTo30Days}>Points in the past 30 days</th>
-              <th onClick={this.switchToAllTime}>All time points</th>
+              <th onClick={() => this.props.getCampers('RECENT')}>Points in the past 30 days</th>
+              <th onClick={() => this.props.getCampers('ALLTIME')}>All time points</th>
             </tr>
           </thead>
           <tbody>
@@ -74,4 +42,6 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { getCampers30Days, getCampersAllTime, getCampers })(CamperList)
+export default connect(mapStateToProps, { getCampers })(CamperList)
+
+// onClick has to be passed a blank function before calling on external action
