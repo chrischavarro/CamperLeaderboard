@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Camper from './camper';
 import { connect } from 'react-redux';
-import { getCampers30Days, getCampersAllTime } from '../actions';
+import { getCampers30Days, getCampersAllTime, getCampers } from '../actions';
 import { bindActionCreators } from 'redux';
 
 class CamperList extends Component {
@@ -11,10 +11,18 @@ class CamperList extends Component {
     this.switchToAllTime = this.switchToAllTime.bind(this);
     this.switchTo30Days = this.switchTo30Days.bind(this);
   }
+
   componentDidMount() {
-    this.props.getCampers30Days();
+    this.props.getCampers('RECENT');
   }
 
+  // componentDidMount() {
+  //   this.props.getCampers30Days();
+  // }
+
+// switchToAllTime and switchTo30Days can probably be reduced to a single actions
+// like getCampers(recent) and getCampers(alltime), with the action accepting a link
+// with the passed value added to the end of the URL
   switchToAllTime() {
     this.props.getCampersAllTime();
   }
@@ -66,11 +74,4 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators( {
-    getCampers30Days: getCampers30Days,
-    getCampersAllTime: getCampersAllTime
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CamperList)
+export default connect(mapStateToProps, { getCampers30Days, getCampersAllTime, getCampers })(CamperList)
